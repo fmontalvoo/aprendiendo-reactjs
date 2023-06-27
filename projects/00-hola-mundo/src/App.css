@@ -1,0 +1,42 @@
+article {
+    color: #fff;
+    display: flex;
+    font-size: .8rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+article header {
+    gap: 4px;
+    display: flex;
+    align-items: center;
+}
+
+article header div {
+    display: flex;
+    flex-direction: column;
+}
+
+article header span {
+    opacity: 0.6;
+}
+
+article img {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+}
+
+article button {
+    border: 0;
+    cursor: pointer;
+    padding: 6px 16px;
+    margin-left: 16px;
+    font-weight: bold;
+    border-radius: 999px;
+}
+
+article button:hover {
+    background-color: #09f;
+    transition: .3s ease background-color;
+}
