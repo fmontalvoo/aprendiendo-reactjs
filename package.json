@@ -1,0 +1,24 @@
+{
+  "name": "aprendiendo-reactjs",
+  "version": "0.0.1",
+  "description": "Monorepo de proyectos de react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fmontalvoo/aprendiendo-reactjs.git"
+  },
+  "keywords": [
+    "React",
+    "Typescript",
+    "Javascript"
+  ],
+  "author": "Frank Montalvo Ochoa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fmontalvoo/aprendiendo-reactjs/issues"
+  },
+  "homepage": "https://github.com/fmontalvoo/aprendiendo-reactjs#readme"
+}
