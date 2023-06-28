@@ -4,7 +4,7 @@ import { TwitterFollowCard } from "./TwitterFollowCard";
 export function App() {
   return (
     <div className="App">
-      <TwitterFollowCard userName="fgmo_8a">
+      <TwitterFollowCard userName="fgmo_8a" initialIsFollowing>
         Frank Montalvo Ochoa
       </TwitterFollowCard>
       <TwitterFollowCard userName="midudev">
