@@ -5,6 +5,20 @@ const TURNS = {
   O: "O",
 };
 
+const WINNER_COMBOS = [
+  // Horizontales
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  // Verticales
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  // Diagonales
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
 const Square = ({ children, updateBoard, isSelected, index }) => {
   const className = `square ${isSelected ? "is-selected" : ""}`;
 
@@ -24,9 +38,36 @@ function App() {
 
   const [turn, setTurn] = useState(TURNS.X);
 
+  // `null` indica que no hay ganador y `false` que hay un empate
+  const [winner, setWinner] = useState(null);
+
+  const checkWinner = (boardToCheck) => {
+    for (const combo of WINNER_COMBOS) {
+      const [a, b, c] = combo;
+      if (
+        boardToCheck[a] &&
+        boardToCheck[a] === boardToCheck[b] &&
+        boardToCheck[b] === boardToCheck[c]
+      ) {
+        return boardToCheck[a];
+      }
+    }
+    return null;
+  };
+
+  const checkEndGame = (boardToCheck) => {
+    return boardToCheck.every((square) => square !== null);
+  };
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setTurn(TURNS.X);
+    setWinner(null);
+  };
+
   const updateBoard = (index) => {
     // No actualizar si ya hay un valor
-    if (board[index]) return;
+    if (board[index] || winner) return;
 
     // Actualizar el tablero
     const newBoard = [...board];
@@ -36,6 +77,13 @@ function App() {
     // Actualizar el turno
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
+
+    const newWinner = checkWinner(newBoard);
+    if (newWinner) {
+      setWinner(newWinner); // La actualización de `winner` es asíncrona
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false);
+    }
   };
 
   return (
@@ -53,6 +101,24 @@ function App() {
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      {winner !== null && (
+        <section className="winner">
+          <div className="text">
+            <h2>
+              {winner === false ? "Empate" : "Ganó:"}
+            </h2>
+
+            <header className="win">
+              {winner && <Square>{winner}</Square>}
+            </header>
+
+            <footer>
+              <button onClick={resetGame}>Empezar de nuevo</button>
+            </footer>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
