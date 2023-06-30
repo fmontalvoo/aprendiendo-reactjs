@@ -1,4 +1,5 @@
 import { useState } from "react";
+import confetti from "canvas-confetti";
 
 const TURNS = {
   X: "X",
@@ -80,6 +81,7 @@ function App() {
 
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
+      confetti();
       setWinner(newWinner); // La actualización de `winner` es asíncrona
     } else if (checkEndGame(newBoard)) {
       setWinner(false);
@@ -90,9 +92,9 @@ function App() {
     <main className="board">
       <h1>Tic tac toe</h1>
       <section className="game">
-        {board.map((_, index) => (
+        {board.map((square, index) => (
           <Square key={index} index={index} updateBoard={updateBoard}>
-            {board[index]}
+            {square}
           </Square>
         ))}
       </section>
