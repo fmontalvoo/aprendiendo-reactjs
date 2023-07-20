@@ -1,26 +1,14 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import { getRandomFact } from './services/facts';
 
-const API_CAT_FACTS = 'https://catfact.ninja/fact';
 const API_CAT_IMAGES = 'https://cataas.com';
 
 export function App() {
-
     const [fact, setFact] = useState('');
     const [image, setImage] = useState('');
 
-    useEffect(
-        () => {
-            fetch(API_CAT_FACTS)
-                .then(res => res.json())
-                .then(data => {
-                    const { fact } = data;
-
-                    setFact(fact);
-                });
-        },
-        []
-    );
+    useEffect(() => getRandomFact().then(setFact), []);
 
     useEffect(() => {
         if (!fact) return;
@@ -37,9 +25,15 @@ export function App() {
 
     }, [fact]);
 
+    const handleClick = async () => {
+        const newFact = await getRandomFact();
+        setFact(newFact);
+    }
+
     return (
         <main>
             <h1>Random Cat Fact</h1>
+            <button onClick={handleClick}>Get new fact</button>
             {/* <section> */}
             {fact && <p>{fact}</p>}
             {image && <img src={`${API_CAT_IMAGES}${image}`} alt={`Image extracted using the fact: ${fact}`} />}
