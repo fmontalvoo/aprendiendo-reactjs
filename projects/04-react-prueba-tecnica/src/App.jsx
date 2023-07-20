@@ -17,21 +17,25 @@ export function App() {
                     const { fact } = data;
 
                     setFact(fact);
-
-                    const firstWord = fact.split(' ', 1);
-
-                    fetch(`${API_CAT_IMAGES}/cat/says/${firstWord}?size=50&json=true`)
-                        .then(res => res.json())
-                        .then(data => {
-                            const { url } = data;
-
-                            setImage(url);
-                        });
-
                 });
         },
         []
     );
+
+    useEffect(() => {
+        if (!fact) return;
+
+        const firstWord = fact.split(' ', 1);
+
+        fetch(`${API_CAT_IMAGES}/cat/says/${firstWord}?size=50&json=true`)
+            .then(res => res.json())
+            .then(data => {
+                const { url } = data;
+
+                setImage(url);
+            });
+
+    }, [fact]);
 
     return (
         <main>
