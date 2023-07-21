@@ -12,14 +12,8 @@ export function useCatImage({ fact }) {
 
         fetch(`${API_CAT_IMAGES}/cat/says/${firstWord}?size=50&json=true`)
             .then(res => res.json())
-            .then(data => {
-                const { url } = data;
-
-                setImage(url);
-            });
-
+            .then(({ url }) => setImage(url));
     }, [fact]);
 
     return { image: `${API_CAT_IMAGES}${image}` }
-
 }
