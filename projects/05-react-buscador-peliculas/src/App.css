@@ -6,6 +6,7 @@
 }
 
 main {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -14,4 +15,28 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.movies {
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.movie {
+  text-align: center;
+}
+
+.movie h3,
+.movie p {
+  margin: 0;
+}
+
+.movie img {
+  margin-top: 16px;
+  border-radius: 8px;
 }
