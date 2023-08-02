@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-
 // import { useRef } from 'react'
 
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
+import { useSearch } from './hooks/useSearch'
+
+import './App.css'
 
 function App() {
   // const inputRef = useRef()
-  const [query, setQuery] = useState('')
-  const [error, setError] = useState(null)
-
   const { movies } = useMovies()
+  const { error, query, updateQuery } = useSearch()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -31,20 +29,8 @@ function App() {
   const handleChange = (event) => {
     const { value } = event.target
     if (value.startsWith(' ')) return
-    setQuery(value)
+    updateQuery(value)
   }
-
-  useEffect(
-    () => {
-      if (query === '') {
-        setError('No hay un término de búsqueda')
-        return
-      }
-
-      setError(null)
-    },
-    [query]
-  )
 
   return (
     <div className='page'>
