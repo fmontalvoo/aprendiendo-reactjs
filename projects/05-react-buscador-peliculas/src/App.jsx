@@ -8,8 +8,8 @@ import './App.css'
 
 function App() {
   // const inputRef = useRef()
-  const { movies } = useMovies()
   const { error, query, updateQuery } = useSearch()
+  const { movies, getMovies, loading } = useMovies({ search: query })
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -24,6 +24,8 @@ function App() {
     // const { query: value } = fields
 
     console.log(query)
+
+    getMovies()
   }
 
   const handleChange = (event) => {
@@ -47,7 +49,11 @@ function App() {
       </header>
 
       <main>
-        <Movies movies={movies} />
+        {
+          loading
+            ? <p>Loading...</p>
+            : <Movies movies={movies} />
+        }
       </main>
     </div >
   )
