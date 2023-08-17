@@ -1,4 +1,4 @@
-// import { useRef } from 'react'
+import { useState } from 'react'
 
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
@@ -8,8 +8,9 @@ import './App.css'
 
 function App() {
   // const inputRef = useRef()
+  const [sort, setSort] = useState(false)
   const { error, query, updateQuery } = useSearch()
-  const { movies, getMovies, loading } = useMovies({ search: query })
+  const { movies, getMovies, loading } = useMovies({ search: query, sort })
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -25,13 +26,17 @@ function App() {
 
     console.log(query)
 
-    getMovies()
+    getMovies({query})
   }
 
   const handleChange = (event) => {
     const { value } = event.target
     if (value.startsWith(' ')) return
     updateQuery(value)
+  }
+
+  const handleSort = () => {
+    setSort(!sort)
   }
 
   return (
@@ -43,6 +48,7 @@ function App() {
           {/* <input ref={inputRef} className='input' type="text" name='query' placeholder='Search...' /> */}
           <input value={query} onChange={handleChange} className='input' type="text" name='query' placeholder='Search...'
             style={{ border: '1px solid transparent', borderColor: error ? 'red' : 'transparent' }} />
+          <input type='checkbox' onChange={handleSort} checked={sort} />
           <button type='sumbit'>Search</button>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}

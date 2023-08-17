@@ -1,15 +1,15 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useMemo } from 'react'
 
 import { searchMovies } from '../services/movies'
 
-export function useMovies({ search }) {
+export function useMovies({ search, sort }) {
     const previusSearch = useRef(search)
     const [movies, setMovies] = useState([])
 
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const getMovies = async () => {
+    const getMovies = useMemo(() => async ({ search }) => {
         if (previusSearch.current === search) return
 
         try {
@@ -23,10 +23,25 @@ export function useMovies({ search }) {
         } finally {
             setLoading(false)
         }
-    }
+    }, [])
+
+    // const sortMovies = () => {
+    //     const srotedMovies = sort
+    //         ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
+    //         : movies
+    //     return srotedMovies
+    // }
+
+
+    const srotedMovies = useMemo(() =>
+        sort
+            ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
+            : movies
+        , [movies, sort]);
+
 
     return {
-        movies,
+        movies: srotedMovies,
         getMovies,
         loading,
         error,
