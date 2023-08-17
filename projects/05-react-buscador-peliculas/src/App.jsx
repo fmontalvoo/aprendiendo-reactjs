@@ -1,4 +1,6 @@
-import { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useCallback } from 'react'
+import debounce from 'just-debounce-it'
 
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
@@ -29,10 +31,15 @@ function App() {
     getMovies({ search: query })
   }
 
+  const getMoviesDebounce = useCallback(
+    debounce(search => getMovies({ search }), 500)
+    , [getMovies])
+
   const handleChange = (event) => {
     const { value } = event.target
     if (value.startsWith(' ')) return
     updateQuery(value)
+    getMoviesDebounce(value)
   }
 
   const handleSort = () => {

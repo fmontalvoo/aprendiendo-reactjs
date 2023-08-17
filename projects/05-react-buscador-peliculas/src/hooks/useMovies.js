@@ -34,7 +34,7 @@ export function useMovies({ search, sort }) {
     // }
 
 
-    const srotedMovies = useMemo(() =>
+    const sortedMovies = useMemo(() =>
         sort
             ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
             : movies
@@ -42,7 +42,7 @@ export function useMovies({ search, sort }) {
 
 
     return {
-        movies: srotedMovies,
+        movies: sortedMovies,
         getMovies,
         loading,
         error,
